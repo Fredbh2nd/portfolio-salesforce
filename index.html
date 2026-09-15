@@ -47,25 +47,62 @@
     border-radius:8px;
     display:block;
     width:100%;
+    cursor:zoom-in;
   }
   .glow-line{
     background:linear-gradient(90deg, var(--sf-blue) 0%, transparent 70%);
     height:2px;
-  }
-  .field-row{
-    display:grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap:0.5rem 1.5rem;
-    padding:0.55rem 0;
-    border-bottom:1px solid var(--line);
-    font-size:0.85rem;
   }
   .badge-card{
     border:1px solid var(--line);
     transition:border-color .2s ease, transform .2s ease;
   }
   .badge-card:hover{border-color:var(--sf-blue); transform:translateY(-2px);}
+  .badge-card img{cursor:zoom-in;}
+  .skill-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.75rem;
+    border:1px solid var(--line);
+    padding:0.3rem 0.7rem;
+    border-radius:999px;
+    color:var(--slate);
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .skill-tag:hover{border-color:var(--sf-blue); color:var(--ink);}
+  .repo-link{
+    display:inline-flex;
+    align-items:center;
+    gap:0.4rem;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    color:var(--slate);
+    transition:color .15s ease;
+  }
+  .repo-link:hover{color:var(--sf-blue);}
   ::selection{background:var(--sf-blue); color:white;}
+
+  /* Lightbox */
+  #lightbox{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(15,20,25,0.92);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:5vh 5vw;
+    cursor:zoom-out;
+  }
+  #lightbox.open{display:flex;}
+  #lightbox img{
+    max-width:100%; max-height:100%;
+    border-radius:10px;
+    box-shadow:0 30px 60px -15px rgba(0,0,0,0.6);
+  }
+  #lightbox .lb-close{
+    position:absolute; top:1.5rem; right:1.75rem;
+    color:#fff; font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem; opacity:0.7;
+  }
+  #lightbox .lb-close:hover{opacity:1;}
+
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     .badge-card{transition:none;}
@@ -150,6 +187,15 @@
           <p class="mt-5 text-lg leading-relaxed text-[var(--slate)]">
             Prefiro resolver problemas de concorrência e regras de negócio complexas com código limpo e testável — e documentar cada decisão como se outro desenvolvedor fosse revisar amanhã.
           </p>
+
+          <div class="mt-8 flex flex-wrap gap-2.5">
+            <span class="skill-tag">Apex</span>
+            <span class="skill-tag">SOQL / SOSL</span>
+            <span class="skill-tag">Flow Builder</span>
+            <span class="skill-tag">LWC</span>
+            <span class="skill-tag">Sales Cloud</span>
+            <span class="skill-tag">Git / SFDX</span>
+          </div>
         </div>
       </div>
     </section>
@@ -161,14 +207,21 @@
 
         <!-- PROJETO 1: StockEngine -->
         <article class="mb-24">
-          <div class="flex items-baseline gap-3 mb-3">
+          <div class="flex items-baseline gap-3 mb-3 flex-wrap">
             <span class="win-dot" style="background:#F04A44"></span>
             <span class="win-dot" style="background:#F2A93B"></span>
             <span class="win-dot" style="background:#3BBF6E"></span>
             <h3 class="text-xl font-bold ml-2">Engenharia de Concorrência — StockEngine</h3>
+            <a href="https://github.com/Fredbh2nd" target="_blank" rel="noopener" class="repo-link ml-auto">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              ver código
+            </a>
           </div>
-          <p class="text-[var(--slate)] leading-relaxed max-w-2xl mb-8">
+          <p class="text-[var(--slate)] leading-relaxed max-w-2xl mb-3">
             Classe Apex que utiliza <code class="mono text-sm bg-[var(--line)]/60 px-1.5 py-0.5 rounded">FOR UPDATE</code> para bloquear registros durante transações simultâneas, prevenindo race conditions no controle de estoque com base nos itens da Oportunidade.
+          </p>
+          <p class="text-sm text-[var(--slate)] max-w-2xl mb-8">
+            <span class="mono" style="color:var(--sf-blue)">@isTest</span> — cobertura validada em sandbox simulando atualizações concorrentes sobre o mesmo registro de estoque, garantindo que o bloqueio pessimista se comporta como esperado antes do deploy.
           </p>
           <div class="grid gap-5">
             <div class="code-frame">
@@ -187,11 +240,15 @@
 
         <!-- PROJETO 2: SmartLead GeoRouting -->
         <article class="mb-24">
-          <div class="flex items-baseline gap-3 mb-3">
+          <div class="flex items-baseline gap-3 mb-3 flex-wrap">
             <span class="win-dot" style="background:#F04A44"></span>
             <span class="win-dot" style="background:#F2A93B"></span>
             <span class="win-dot" style="background:#3BBF6E"></span>
             <h3 class="text-xl font-bold ml-2">SmartLead GeoRouting — Roteamento Inteligente</h3>
+            <a href="https://github.com/Fredbh2nd" target="_blank" rel="noopener" class="repo-link ml-auto">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+              ver código
+            </a>
           </div>
           <p class="text-[var(--slate)] leading-relaxed max-w-2xl mb-8">
             Arquitetura completa para distribuição automatizada de Leads por região (UF). Envolveu a modelagem de um objeto de configuração com campos de sequência matemática — <span class="mono text-sm">Fator de Distribuição</span> e <span class="mono text-sm">Número da Vez</span> — e a construção da lógica de atribuição via Flow Builder.
@@ -202,7 +259,7 @@
             </div>
             <div class="border border-[var(--line)] rounded-xl p-5">
               <p class="mono text-xs text-[var(--slate)] mb-3">Configuração_de_Roteamento__c</p>
-              <img src="img/dash-schema.png.png" alt="Modelagem de dados do objeto de roteamento" loading="lazy" class="rounded-md border border-[var(--line)]">
+              <img src="img/dash-schema.png.png" alt="Modelagem de dados do objeto de roteamento" loading="lazy" class="rounded-md border border-[var(--line)] cursor-zoom-in">
             </div>
           </div>
         </article>
@@ -278,6 +335,12 @@
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span class="lb-close">fechar ✕</span>
+  <img id="lightbox-img" src="" alt="Visualização ampliada">
+</div>
+
 <script>
   // Destaca o link ativo da trilha lateral conforme a seção visível
   const sections = document.querySelectorAll('section[id]');
@@ -294,6 +357,31 @@
   };
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Lightbox — amplia qualquer imagem de código/fluxo/schema/badges ao clicar
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const zoomableImages = document.querySelectorAll('.code-frame img, .badge-card img');
+
+  zoomableImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    }
+  });
 </script>
 
 </body>
