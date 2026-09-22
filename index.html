@@ -221,7 +221,7 @@
             Classe Apex que utiliza <code class="mono text-sm bg-[var(--line)]/60 px-1.5 py-0.5 rounded">FOR UPDATE</code> para bloquear registros durante transações simultâneas, prevenindo race conditions no controle de estoque com base nos itens da Oportunidade.
           </p>
           <p class="text-sm text-[var(--slate)] max-w-2xl mb-8">
-            <span class="mono" style="color:var(--sf-blue)">@isTest</span> — cobertura validada em sandbox simulando atualizações concorrentes sobre o mesmo registro de estoque, garantindo que o bloqueio pessimista se comporta como esperado antes do deploy.
+            <a href="https://github.com/Fredbh2nd/portfolio-salesforce/blob/main/smart_stock/force-app/main/default/classes/StockEngineTest.cls" target="_blank" rel="noopener" class="mono font-semibold hover:underline" style="color:var(--sf-blue)">@isTest ↗</a> — cobertura validada em sandbox simulando atualizações concorrentes sobre o mesmo registro de estoque, garantindo que o bloqueio pessimista se comporta como esperado antes do deploy.
           </p>
           <div class="grid gap-5">
             <div class="code-frame">
